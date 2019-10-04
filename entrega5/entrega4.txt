@@ -1,0 +1,60 @@
+Carlos Bárcenas
+Eric Casanovas
+
+Proves:
+
+
+1 -> OK
+2 -> OK
+3 -> OK
+4 -> OK, sense error.
+5 -> OK, partició creada. xrd0p1 creat.
+6 -> OK, partició comprovada.
+
+Checking for bad blocks in read-write mode
+From block 0 to 0
+Testing with pattern 0xaa: done                                                 
+Reading and comparing: done                                                 
+Testing with pattern 0x55: done                                                 
+Reading and comparing: done                                                 
+Testing with pattern 0xff: done                                                 
+Reading and comparing: done                                                 
+Testing with pattern 0x00: done                                                 
+Reading and comparing: done                                                 
+Pass completed, 0 bad blocks found. (0/0/0 errors)
+
+7 -> OK, partition done
+8 -> Ok, partition done
+9 -> Ok
+
+fsck from util-linux 2.31.1
+e2fsck 1.44.1 (24-Mar-2018)
+/dev/xrd1: clean, 11/4096 files, 661/16384 blocks
+
+10 -> OK
+
+total 12
+drwx------ 2 root root 12288 may  9 09:34 lost+found
+
+11 -> OK, no podem desmuntar el modul perque está muntada encara la partició
+
+
+
+Sortides del check-disk:
+
+ext2 -> Test   SUCCESSFUL!!
+vfat -> Test   SUCCESSFUL!!
+ext3 -> Test   SUCCESSFUL!!
+ext4 -> Test   SUCCESSFUL!!
+reiserfs -> Test UNSUCCESSFUL!!!!! (Deprecated)
+reiser4 -> Test UNSUCCESSFUL!!!!! (Deprecated)
+
+
+Sortides del check-partition:
+
+ext2 -> Test   SUCCESSFUL!!
+vfat -> Test   SUCCESSFUL!!
+ext3 -> Test   SUCCESSFUL!!
+ext4 -> Test   SUCCESSFUL!!
+reiserfs -> Test UNSUCCESSFUL!!!!! (Deprecated)
+reiser4 -> Test UNSUCCESSFUL!!!!! (Deprecated)

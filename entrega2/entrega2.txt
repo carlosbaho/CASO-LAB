@@ -1,0 +1,33 @@
+Carlos Barcenas
+Eric Casanovas
+
+- vector-mem.O0, versió sense optimitzacions
+
+Si que funciona.
+3.25 user 0.95 system 0:04.20 elapsed
+
+- vector-mem.O1, versió amb optimitzacions senzilles
+
+Si que funciona.
+1.77 user 0.89 system 0:02.66 elapsed
+
+- vector-mem.O2, versió amb optimitzacions estàndard
+
+Si que funciona.
+1.70 user 0.96 system 0:02.66 elapsed
+
+- vector-mem.O3, versió amb optimitzacions agressives
+
+Si que funciona.
+1.48 user 0.90 system 0:02.39 elapsed
+
+- vector-simd, versió amb extensions SIMD
+
+No funciona, perque l'arquitectura del procesador no es compatible amb les instruccions d'assembler de AVX512F. Hem buscat informació i hem trobat que AVX512 genera instruccions amb mida de 512 bits.
+
+Expliqueu què fa el programa i per què hi ha versio(ns) que no funcionen:
+
+El programa declara tres vectors floats (A,B,C) de mida 400000000. Els alinea a 128. El vector A assignem a cada posició el valor del seu índex, B el valor del seu índex +1, finalment C, a 0. Posteriorment sumem els valors de cada posició de A i B i els guardem a C. Per acabar multipliquem els valors de cada posició de A i B i ho guardem a C sobreescrivint el valor anterior de la suma.
+
+
+#Tot està en segons. :D

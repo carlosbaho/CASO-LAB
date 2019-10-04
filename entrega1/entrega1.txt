@@ -1,0 +1,54 @@
+0.- Carlos Barcenas i Eric Casanovas
+
+1. How many types of partition tables do we have in standard PCs? Which ones?
+Per linux tenim 2 principals:
+- MBR (Master Boot Record): És el més fet servir, té un espai reservat al inici del disc de 2048 blocs. Només podem fer 4 particions que poden ser primary or extended.
+- GPT (GUID Partition Table): Té varis avantatges sobre MBR com que pot fer-se servir en discs més grans de 2TB, no ha de reservar cap bloc a l'inici del disc però si a cada partició. Podem fer fins a 128 particions.
+
+2. How many types of boot processes do we have in standard PCs?
+Which ones? Describe them briefly.
+- UEFI (Unified Extensible Firmware Interface): Va ser creat per millorar l'anterior (EFI) i reemplaçar el legacy, és més ràpid que el legacy degut a que esta escrit en c, i a més no té problemes de compatibilitat amb el hardware.
+- Legacy: Esta escrit en assembler i és més lent que el UEFI, pot tenir problemes de compatibilitat amb el hardware.
+Tot i aixi els 2 són fets servir.
+
+3. What it represents the block device /dev/sda?
+And /dev/sda2?
+sda representa un disc dur, mentre que sda2 (sdaX) representa una partició d'aquest.
+
+4. On the x86_64 architecture...
+Have you found that the QEMU emulator has a BIOS ROM already in-place?
+Why?
+Sí, perque quan iniciem el qemu al principi intenta bootejar desde varis llocs (disc, usb, cd-ROM...).
+
+5. On the ARM64 architecture...
+Do you think the QEMU emulator has a BIOS ROM already in-place?
+Why?
+No, perque al iniciar el qemu hem observat que no intentava bootejar, es quedava la pantalla negra. Però després durant la practica quan creem un disc amb UEFI-GPT booteja correctament degut a que UEFI fa de bios.
+
+6. During the laboratory sessions, did you manage to boot with QEMU from
+a RAMDISK like /dev/ram0? (please answer yes or no)
+Si, tot i que hem hagut de crear-los amb les comandes donades al peu de pàgina, degut a que segons hem buscat a partir de certa versió d'ubuntu va deixar de crear els /dev/ram.
+
+7. During the laboratory sessions, did you manage to boot QEMU with the Linux
+for the Linaro VExpress64? (please answer yes or no)
+No, degut a que ens dona un error:
+
+[    2.979793] No filesystem could mount root, tried:  ext3 ext2 ext4 cramfs vfat msdos btrfs
+[    2.980473] Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(254,2)
+[    2.980843] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 3.16.0-1-linaro-vexpress64 #1ubuntu1~ci+140819081106
+[    2.981126] Call trace:
+[    2.981269] [<ffffffc000088ce8>] dump_backtrace+0x0/0x140
+[    2.981407] [<ffffffc000088e84>] show_stack+0x20/0x2c
+[    2.981523] [<ffffffc00070b818>] dump_stack+0x88/0xd8
+[    2.981659] [<ffffffc000704208>] panic+0xec/0x224
+[    2.981767] [<ffffffc000961f6c>] mount_block_root+0x250/0x278
+[    2.981889] [<ffffffc0009621dc>] mount_root+0x114/0x134
+[    2.982001] [<ffffffc000962374>] prepare_namespace+0x178/0x1c4
+[    2.982122] [<ffffffc000961b40>] kernel_init_freeable+0x1bc/0x1e0
+[    2.982250] [<ffffffc0007009ec>] kernel_init+0x1c/0xdc
+[    2.982612] ---[ end Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(254,2)
+
+I segons hem buscat es perque falta el initramfs per aquest kernel, però no sabem ben bé com arreglar-ho.
+
+8. On a scale from zero (0) to ten (10), which mark would you assign yourselves for this lab session?
+7

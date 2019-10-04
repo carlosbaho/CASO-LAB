@@ -1,0 +1,63 @@
+Carlos Bárcenas 
+Eric Casanovas
+
+
+1) Podeu identificar els processos que corren a dins del contenidor i dir a quins corresponen dels defora del contenidor? Proveu-ho amb la comanda “ps” executada a dins i a fora.
+Si.
+
+2) Quins pids de dins corresponen a quins pid's de fora?
+	Dins contenidor
+	1 root     init
+    4 root     /bin/syslogd
+    9 root     /bin/udhcpc
+   10 root     /bin/getty -L tty1 115200 vt100
+   11 root     init
+   18 root     /bin/sh
+
+   Fora contenidor
+	root      7092  0.0  0.0   2320    12 ?        Ss   08:45   0:00 init
+	root      7132  0.0  0.0   2320    84 ?        Ss   08:45   0:00 /bin/syslogd
+	root      7142  0.0  0.0   2320    76 ?        Ss   08:45   0:00 /bin/udhcpc
+	root      7143  0.0  0.0   2320     4 pts/0    Ss+  08:45   0:00 /bin/getty -L tty1 115200 vt100
+	root      7144  0.0  0.0   2320    88 pts/1    Ss+  08:45   0:00 init
+	root     31579  0.0  0.0   2320     4 pts/2    Ss+  08:55   0:00 /bin/sh
+
+
+3) Quins processos estan reflexats en el directori /proc/ de dins el contenidor i quins en el de fora?Podem depurar des de fora un procés de dins? proveu-ho..
+Tots tant a dins com a fora. Si que podem ja que hi ha el mateix contingut als 2.
+
+
+4) Proveu a restringir el conjunt de processadors en els quals poden córrer els processos del vostre contenidor. Pista: man lxc-cgroup.Quina comanda faríeu servir per permetre que els processos del contenidor només poguessin executar-se en els cores 0, 2, 4 i 6?
+lxc-cgroup -n busybox cpuset.cpus "0,2,4,6"
+
+
+5) Quina comanda podeu usar des de fora del contenidor per comprovar que els processos només s'executen en els processadors que els heu assignat?
+ps -eF i comprovem que el cpu dels processos es un nombre dels assignats.
+
+
+6) I quina comanda podeu usar des de dins del contenidor per veure la mateixa informació?
+podem fer un cat del fitxer status dins de cada proces al /proc.
+
+
+7) On té el directori arrel el contenidor busybox? (pista: /var/lib/lxc/...)
+/var/lib/lxc/busybox/rootfs
+
+
+8) Quina comanda és en realitat el fitxer /sbin/init en aquest directori que heu trobat? (pista, buscar altres comandes que tinguin el mateix tamany dins del contenidor, o també a fora!!, o trobar la comanda apuntada pel symbolic link)
+lxc-start -n busybox
+
+
+9) Quins usuaris i grups tenim dins el contenidor? (pista: /etc/passwd i /etc/group)
+Usuaris: root:x:0:0:root:/root:/bin/sh (nomes root)
+Grups: root:x:0:root (nomes el grup root amb l'usuari root)
+
+
+10) Si afegiu un nou usuari, podeu fer su - usuari i comprovar que funciona? Expliqueu-ho(pista: editeu el fitxer de passwd directament :)
+Si que funciona, li hem afegit un directori a /home i li hem afegit un terminal: caso:x:100:0:usuari_creat:/home/caso:/bin/sh
+
+
+11) En el fitxer "container.c" hi ha diversos comentaris en català, indicant les parts del codi que heu de completar. Feu-ho, abans de poder provar els següents exemples.
+
+
+12) Comproveu si la instal·lació del container s'engega correctament o no.
+Si s'engega
